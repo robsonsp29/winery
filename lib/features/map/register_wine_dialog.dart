@@ -72,7 +72,7 @@ class _RegisterWineDialogState extends State<RegisterWineDialog> {
     WineRepository.instance.addWine(wine);
     Navigator.of(context).pop();
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Vinho "${wine.name}" cadastrado por R\$ ${price.toStringAsFixed(2)}!')),
+      SnackBar(content: Text('Vinho "${wine.name}" cadastrado e vinculado a "${widget.winery.name}" por R\$ ${price.toStringAsFixed(2)}!')),
     );
   }
 
@@ -80,7 +80,7 @@ class _RegisterWineDialogState extends State<RegisterWineDialog> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return AlertDialog(
-      title: Text('Postar Vinho para Venda\n(${widget.winery.name})'),
+      title: const Text('Postar Vinho para Venda'),
       content: SizedBox(
         width: MediaQuery.of(context).size.width * 0.85,
         child: SingleChildScrollView(
@@ -90,6 +90,31 @@ class _RegisterWineDialogState extends State<RegisterWineDialog> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
+                // Card de Vinculação com a Vinícola
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: theme.colorScheme.primaryContainer.withValues(alpha: 0.3),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: theme.colorScheme.primary.withValues(alpha: 0.5)),
+                  ),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.wine_bar, color: Color(0xFF722F37)),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text('Vinícola Vinculada:', style: TextStyle(fontSize: 12, color: Colors.grey)),
+                            Text(widget.winery.name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 16),
                 TextFormField(
                   controller: _nameController,
                   decoration: const InputDecoration(labelText: 'Nome do Vinho *'),
@@ -155,7 +180,6 @@ class _RegisterWineDialogState extends State<RegisterWineDialog> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                // Seção Foto do Vinho
                 Text('Foto do Vinho:', style: theme.textTheme.titleSmall),
                 const SizedBox(height: 8),
                 Row(

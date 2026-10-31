@@ -9,8 +9,8 @@ import 'package:winery_finder/data/winery_repository.dart';
 import 'package:winery_finder/domain/winery.dart';
 import 'package:winery_finder/domain/winery_filter.dart';
 import 'package:winery_finder/features/admin/admin_dashboard_screen.dart';
-import 'package:winery_finder/features/map/register_wine_dialog.dart';
 import 'package:winery_finder/features/map/register_winery_dialog.dart';
+import 'package:winery_finder/features/map/winery_products_panel.dart';
 import 'package:winery_finder/widgets/winery_logo.dart';
 
 /// Aba Mapa: exibe o mapa interativo, busca, filtros, lista, detalhes e vinhos à venda.
@@ -199,15 +199,16 @@ class _MapScreenState extends State<MapScreen> {
                         children: [
                           Text('Vinhos & Preços para Venda:', style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
                           if (canModify)
-                            TextButton.icon(
+                            FilledButton.icon(
                               onPressed: () {
-                                showDialog<void>(
-                                  context: context,
-                                  builder: (_) => RegisterWineDialog(winery: winery),
+                                Navigator.of(context).push(
+                                  MaterialPageRoute<void>(
+                                    builder: (_) => WineryProductsPanel(winery: winery),
+                                  ),
                                 );
                               },
-                              icon: const Icon(Icons.add, size: 18),
-                              label: const Text('Postar Vinho'),
+                              icon: const Icon(Icons.inventory, size: 18),
+                              label: const Text('Painel de Produtos'),
                             ),
                         ],
                       ),
