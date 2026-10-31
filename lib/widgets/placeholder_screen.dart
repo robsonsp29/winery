@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:winery_finder/widgets/vineyard_background.dart';
 
-/// Tela de estado vazio usada enquanto as features reais não existem.
+/// Tela de estado vazio usada em abas com fundo decorativo de videira.
 class PlaceholderScreen extends StatelessWidget {
   const PlaceholderScreen({
     required this.title,
@@ -18,14 +19,20 @@ class PlaceholderScreen extends StatelessWidget {
     final ThemeData theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(title: Text(title)),
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Icon(icon, size: 48, color: theme.colorScheme.primary),
-            const SizedBox(height: 16),
-            Text(message, style: theme.textTheme.bodyLarge),
-          ],
+      body: VineyardBackground(
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Icon(icon, size: 56, color: theme.colorScheme.primary),
+              const SizedBox(height: 16),
+              Text(
+                message,
+                style: theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
         ),
       ),
     );
